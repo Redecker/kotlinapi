@@ -49,7 +49,7 @@ class HotelService(
         val updateHotel = findById(id)
 
         if (updateHotel.availability == 0){
-            throw NotFoundException(Errors.HOTELAVAILABILITY.message.format(id), Errors.HOTELAVAILABILITY.code)
+            throw BadRequestException(Errors.HOTELAVAILABILITY.message.format(id), Errors.HOTELAVAILABILITY.code)
         }
         updateHotel.availability--;
         hotelRepository.save(updateHotel)
