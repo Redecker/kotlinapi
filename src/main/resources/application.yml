@@ -3,8 +3,11 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost:3307/trivagocase?createDatabaseIfNotExist=true
-    username: admin
-    password: root
+    url: jdbc:mysql://localhost:3306/trivagocase?createDatabaseIfNotExist=true
+    username: root
+    password: password
+    #url: jdbc:mysql://localhost:3307/trivagocase?createDatabaseIfNotExist=true
+    #username: admin
+    #password: root
   cache:
     type: simple
