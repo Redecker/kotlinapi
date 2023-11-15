@@ -6,6 +6,7 @@ import com.trivagocase.exception.BadRequestException
 import com.trivagocase.exception.NotFoundException
 import com.trivagocase.model.HotelModel
 import com.trivagocase.repository.HotelRepository
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.stereotype.Service
 import org.springframework.web.client.HttpClientErrorException.BadRequest
 import java.lang.Exception
@@ -15,10 +16,11 @@ class HotelService(
         val hotelRepository: HotelRepository
 ) {
 
-    fun getAll(name: String?, rating: Int?, reputationBadge: String?, city: String?): List<HotelModel> {
+    fun getAllHotels(name: String?, rating: Int?, reputationBadge: String?, city: String?): List<HotelModel> {
         return hotelRepository.getHotels(name, rating, reputationBadge, city)
     }
 
+    @CacheEvict(value = ["all"] , allEntries = true)
     fun create(hotel: HotelModel) {
         val newHotel = hotelValidations(hotel)
         hotelRepository.save(newHotel)
@@ -28,11 +30,13 @@ class HotelService(
         return hotelRepository.findById(id).orElseThrow{NotFoundException(Errors.HOTELNOTFOUND.message.format(id), Errors.HOTELNOTFOUND.code)}
     }
 
+    @CacheEvict(value = ["all"] , allEntries = true)
     fun update(hotel: HotelModel) {
         val updateHotel = hotelValidations(hotel)
         hotelRepository.save(updateHotel)
     }
 
+    @CacheEvict(value = ["all"] , allEntries = true)
     fun delete(id: Int) {
         if(!hotelRepository.existsById(id)){
             throw NotFoundException(Errors.HOTELNOTFOUND.message.format(id), Errors.HOTELNOTFOUND.code)
@@ -40,6 +44,7 @@ class HotelService(
         hotelRepository.deleteById(id)
     }
 
+    @CacheEvict(value = ["all"] , allEntries = true)
     fun reduceAvailability(id: Int){
         val updateHotel = findById(id)
 

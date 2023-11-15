@@ -6,3 +6,5 @@ spring:
     url: jdbc:mysql://localhost:3307/trivagocase?createDatabaseIfNotExist=true
     username: admin
     password: root
+  cache:
+    type: simple

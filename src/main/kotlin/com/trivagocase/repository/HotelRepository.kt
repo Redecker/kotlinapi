@@ -14,11 +14,31 @@ interface HotelRepository : CrudRepository<HotelModel, Int> {
             "AND (:rating IS NULL OR h.rating = :rating) " +
             "AND (:reputationBadge IS NULL OR h.reputationBadge = :reputationBadge) " +
             "AND (:city IS NULL OR l.city = :city)")
-    @Cacheable("hotels")
+    @Cacheable("all")
     fun getHotels(
             @Param("name") name: String?,
             @Param("rating") rating: Int?,
             @Param("reputationBadge") reputationBadge: String?,
             @Param("city") city: String?
+    ): List<HotelModel>
+
+    @Cacheable("name")
+    fun findByNameContaining(
+            name: String?
+    ): List<HotelModel>
+
+    @Cacheable("rating")
+    fun findByRating(
+            rating: Int?
+    ): List<HotelModel>
+
+    @Cacheable("reputationBadge")
+    fun findByReputationBadge(
+            reputationBadge: String?
+    ): List<HotelModel>
+
+    @Cacheable("locationCity")
+    fun findByLocationCity(
+            city: String?
     ): List<HotelModel>
 }

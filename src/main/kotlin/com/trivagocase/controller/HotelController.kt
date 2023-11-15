@@ -16,12 +16,12 @@ class HotelController (
     val hotelService : HotelService
 ){
     @GetMapping
-    fun getAll(@RequestParam name: String?,
+    fun getAllHotels(@RequestParam name: String?,
                @RequestParam rating: Int?,
                @RequestParam city: String?,
                @RequestParam reputationBadge: String?
                ): List<HotelResponse> {
-        return hotelService.getAll(name, rating, reputationBadge, city).map{ it.toResponse()}
+        return hotelService.getAllHotels(name, rating, reputationBadge, city).map{ it.toResponse()}
     }
 
     @PutMapping("/{id}/availability")
